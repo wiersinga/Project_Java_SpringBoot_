@@ -38,7 +38,10 @@ public class ProductController {
 
     }
     @PostMapping("/Products")
-    public Product addProduct() throws ParseException {
+    public Product addProduct(String licenseNum) throws ParseException, LicenseDrivingException {
+        if (isDivinglicenseValid(licenseNum)){
+            throw new LicenseDrivingException("the driving license is not valid !");
+        }
         return productDAO.save(new Product(1,"PC Hp",600,extractDate1("20/08/1995") ,"FMGTS458"));
 
     }
@@ -51,15 +54,19 @@ public class ProductController {
 //The @RequestBody annotation indicates that Spring should deserialize a request body into an object.
 // This object is passed as a handler method parameter.
     @PutMapping("/Products/{id}")
-    public Product updateProduct(@RequestBody Product product, @PathVariable int id) {
+    public Product updateProduct(@RequestBody Product product, @PathVariable int id, String licenseNum) throws LicenseDrivingException {
+        if (!isDivinglicenseValid(licenseNum)){
+            throw new LicenseDrivingException("the driving license is not valid !");
+        }
         return productDAO.editProduct(product,id);
+
     }
 
     public Date extractDate1(String date) throws ParseException {
         SimpleDateFormat dateConvertor = new SimpleDateFormat("dd/MM/yyyy");
         return dateConvertor.parse(date);
     }
-    public Boolean isDivinglicenseValid(String licenceDrivingNum) throws LicenseDrivingException {
+    public Boolean isDivinglicenseValid(String licenceDrivingNum) {
         return restTemplate.getForObject("http://localhost:8081/licenses" + licenceDrivingNum,Boolean.class);
     }
 
