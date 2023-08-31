@@ -1,9 +1,12 @@
 package com.testsring.test.exceptions;
 
-public class LicenseDrivingException extends Throwable {
+import org.springframework.http.HttpStatus;
+import org.springframework.web.server.ResponseStatusException;
 
-    public LicenseDrivingException(String message) {
+public class LicenseDrivingException extends ResponseStatusException {
 
-        super(message);
+    public LicenseDrivingException() {
+
+        super(HttpStatus.NOT_FOUND, "the driving license is not valid !");
     }
 }
