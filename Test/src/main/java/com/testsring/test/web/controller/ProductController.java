@@ -1,9 +1,9 @@
-package com.testsring.Test.web.controller;
+package com.testsring.test.web.controller;
 
 
-import com.testsring.Test.exceptions.LicenseDrivingException;
-import com.testsring.Test.model.Product;
-import com.testsring.Test.model.ProductDAOImpl;
+import com.testsring.test.exceptions.LicenseDrivingException;
+import com.testsring.test.model.Product;
+import com.testsring.test.model.ProductDAOImpl;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
@@ -43,23 +43,22 @@ public class ProductController {
             throw new LicenseDrivingException("the driving license is not valid !");
         }
         return productDAO.save(new Product(1,"PC Hp",600,extractDate1("20/08/1995") ,"FMGTS458"));
-
     }
 
     @DeleteMapping("/Products/{id}")
     public Product deleteProduct(@PathVariable int id){
         return productDAO.delete(id);
-
     }
-//The @RequestBody annotation indicates that Spring should deserialize a request body into an object.
-// This object is passed as a handler method parameter.
+
+
+////The @RequestBody annotation indicates that Spring should deserialize a request body into an object.
+//// This object is passed as a handler method parameter.
     @PutMapping("/Products/{id}")
     public Product updateProduct(@RequestBody Product product, @PathVariable int id, String licenseNum) throws LicenseDrivingException {
         if (!isDivinglicenseValid(licenseNum)){
             throw new LicenseDrivingException("the driving license is not valid !");
         }
         return productDAO.editProduct(product,id);
-
     }
 
     public Date extractDate1(String date) throws ParseException {
@@ -67,7 +66,7 @@ public class ProductController {
         return dateConvertor.parse(date);
     }
     public Boolean isDivinglicenseValid(String licenceDrivingNum) {
-        return restTemplate.getForObject("http://localhost:8081/licenses" + licenceDrivingNum,Boolean.class);
+        return restTemplate.getForObject("http://localhost:8080/licenses" + licenceDrivingNum,Boolean.class);
     }
 
 

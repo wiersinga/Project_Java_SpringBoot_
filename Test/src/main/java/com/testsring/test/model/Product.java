@@ -1,4 +1,4 @@
-package com.testsring.Test.model;
+package com.testsring.test.model;
 
 import java.util.Date;
 

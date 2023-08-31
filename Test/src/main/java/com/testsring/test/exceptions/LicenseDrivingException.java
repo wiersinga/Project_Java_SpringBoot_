@@ -1,4 +1,4 @@
-package com.testsring.Test.exceptions;
+package com.testsring.test.exceptions;
 
 public class LicenseDrivingException extends Throwable {
 

@@ -1,6 +1,6 @@
-package com.testsring.Test.dao;
+package com.testsring.test.dao;
 
-import com.testsring.Test.model.Product;
+import com.testsring.test.model.Product;
 
 import java.util.List;
 

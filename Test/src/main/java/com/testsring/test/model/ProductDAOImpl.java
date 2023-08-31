@@ -1,6 +1,6 @@
-package com.testsring.Test.model;
+package com.testsring.test.model;
 
-import com.testsring.Test.dao.IProductDAO;
+import com.testsring.test.dao.IProductDAO;
 import org.springframework.stereotype.Repository;
 
 import java.text.ParseException;
