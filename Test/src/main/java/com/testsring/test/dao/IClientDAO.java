@@ -1,17 +1,14 @@
 package com.testsring.test.dao;
 
-import com.testsring.test.model.Client;
+import com.testsring.test.model.Customer;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface IClientDAO extends JpaRepository<Client, Integer> {
+public interface IClientDAO extends JpaRepository<Customer, Integer> {
 
-    Client findById(int id);
+    Customer findById(int id);
 
-    Client save(Client client);
-
-
-
-     Client deleteById(int id);
+    Customer save(Customer customer);
+     Customer deleteById(int id);
 }

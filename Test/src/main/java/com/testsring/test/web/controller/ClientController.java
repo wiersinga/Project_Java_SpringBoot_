@@ -6,17 +6,17 @@ import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
 import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
 import com.testsring.test.dao.IClientDAO;
 import com.testsring.test.exceptions.LicenseDrivingException;
-import com.testsring.test.model.Client;
+import com.testsring.test.model.Customer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.converter.json.MappingJacksonValue;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
 
-//il indique que cette classe va pouvoir traiter les requêtes que nous allons définir.
-// Il indique aussi que chaque méthode va renvoyer directement la réponse JSON à l'utilisateur, donc pas de vue dans le circuit.
+//il indique que cette classe va pouvoir traiter les requêtes que nous allons definir.
+// Il indique aussi que chaque méthode va renvoyer directement la réponse JSON à l utilisateur, donc pas de vue dans le circuit.
 @RestController
-@RequestMapping("/clients")
+@RequestMapping("/customers")
 public class ClientController {
     RestTemplate restTemplate = new RestTemplate();
     @Autowired
@@ -25,7 +25,7 @@ public class ClientController {
 
     @GetMapping
     public Object listAllClients() {
-        Iterable<Client> clients = clientDAO.findAll();
+        Iterable<Customer> clients = clientDAO.findAll();
         //return clients;
         SimpleBeanPropertyFilter monFiltre = SimpleBeanPropertyFilter.serializeAllExcept("lastName");
 
@@ -38,33 +38,37 @@ public class ClientController {
         return clientsFiltres;
     }
 @GetMapping("/{id}")
-    public Client listOneClient(@PathVariable int id){
+    public Customer listOneClient(@PathVariable int id){
         return clientDAO.findById(id);
     }
 @PostMapping
-    public Client addAClient(@RequestBody Client client){
-    if (!isDrivinglicenseValid(client.getDrivinglicenseNumber())){
+    public Customer addAClient(@RequestBody Customer customer){
+    if (!isDrivinglicenseValid(customer.getLicenseId())){
             throw new LicenseDrivingException();
        }
-        return clientDAO.save(client);
+        return clientDAO.save(customer);
     }
 
 @PutMapping
-    public Client editAclient(@RequestBody Client client){
-        if (!isDrivinglicenseValid(client.getDrivinglicenseNumber())){
+    public Customer editAclient(@RequestBody Customer customer){
+        if (!isDrivinglicenseValid(customer.getLicenseId())){
             throw new LicenseDrivingException();
         }
-        return clientDAO.save(client);
+        return clientDAO.save(customer);
     }
 
     @DeleteMapping("/{id}")
-    public Client deleteProduct(@PathVariable int id){
+    public Customer deleteProduct(@PathVariable int id){
         return clientDAO.deleteById(id);
     }
 
        public Boolean isDrivinglicenseValid(String licenceDrivingNum) {
         return restTemplate.getForObject("http://localhost:8081/licenses/" + licenceDrivingNum,Boolean.class);
    }
+
+
+
+
 }
 
 
@@ -79,21 +83,6 @@ public class ClientController {
 
 
 
-//
-//////The @RequestBody annotation indicates that Spring should deserialize a request body into an object.
-////// This object is passed as a handler method parameter.
-//    @PutMapping("/Products/{id}")
-//    public Client updateProduct(@RequestBody Client client, @PathVariable int id) throws LicenseDrivingException {
-//        if (!isDrivinglicenseValid(client.getDrivinglicenseNumber())){
-//            throw new LicenseDrivingException();
-//        }
-//        return clientDAO.editClient(client,id);
-//    }
-//
-////    public Date extractDate1(String date) throws ParseException {
-////        SimpleDateFormat dateConvertor = new SimpleDateFormat("dd/MM/yyyy");
-////        return dateConvertor.parse(date);
-////    }
 
 
 
@@ -114,8 +103,8 @@ public class ClientController {
 //@RequestMapping(value="/Produits/{id}", method= RequestMethod.GET)
 //@GetMapping("/Produits/{id}")
 
-//public Client afficheUnProduit(@PathVariable int id) throws ParseException {
-//    Client product = new Client(id, "Aspirateur", 100, extractDate("20/08/1996"),"F2C5914DP");
+//public Customer afficheUnProduit(@PathVariable int id) throws ParseException {
+//    Customer product = new Customer(id, "Aspirateur", 100, extractDate("20/08/1996"),"F2C5914DP");
 //    return product;
 //}
 

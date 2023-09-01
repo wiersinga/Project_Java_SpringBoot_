@@ -1,19 +1,22 @@
 package com.testsring.test.model;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import java.util.Date;
 
 @Entity
 //@Entity afin qu'elle soit scannée et prise en compte
-public class Client {
+public class Customer {
     @Id
+    @GeneratedValue(strategy= GenerationType.IDENTITY)
     //annotez l'attribut id avec @Id et @GeneratedValue afin qu'il soit identifié en tant que clé unique autogénérée.
     private Integer id;
-    private String name;
+    private String firstName;
     private String lastName;
     private Date birthDate;
-    private String drivinglicenseNumber;
+    private String licenseId;
 
     public Integer getId() {
         return id;
@@ -23,12 +26,12 @@ public class Client {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getFirstName() {
+        return firstName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setFirstName(String name) {
+        this.firstName = name;
     }
 
     public String getLastName() {
@@ -47,38 +50,22 @@ public class Client {
         this.birthDate = birthDate;
     }
 
-    public String getDrivinglicenseNumber() {
-        return drivinglicenseNumber;
+    public String getLicenseId() {
+        return licenseId;
     }
 
-    public void setDrivinglicenseNumber(String drivinglicenseNumber) {
-        this.drivinglicenseNumber = drivinglicenseNumber;
+    public void setLicenseId(String drivinglicenseNumber) {
+        this.licenseId = drivinglicenseNumber;
     }
-
-
-    //    public Client(int id, String name, String lastName, Date birthDate, String drivinglicenseNumber) {
-//
-//        this.id = id;
-//        this.name = name;
-//        this.lastName = lastName;
-//        this.birthDate = birthDate;
-//        this.drivinglicenseNumber = drivinglicenseNumber;
-//    }
-
-//    public Client() {
-//
-//    }
-
-
 
     @Override
     public String toString() {
-        return "Client{" +
+        return "Customer{" +
                 "id=" + id +
-                ", name='" + name + '\'' +
+                ", name='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", birthDate=" + birthDate +
-                ", drivinglicenseNumber='" + drivinglicenseNumber + '\'' +
+                ", drivinglicenseNumber='" + licenseId + '\'' +
                 '}';
     }
 }
