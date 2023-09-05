@@ -39,6 +39,7 @@ public class ClientController {
     }
 @GetMapping("/{id}")
     public Customer listOneClient(@PathVariable int id){
+
         return clientDAO.findById(id);
     }
 @PostMapping
@@ -65,9 +66,6 @@ public class ClientController {
        public Boolean isDrivinglicenseValid(String licenceDrivingNum) {
         return restTemplate.getForObject("http://localhost:8081/licenses/" + licenceDrivingNum,Boolean.class);
    }
-
-
-
 
 }
 
